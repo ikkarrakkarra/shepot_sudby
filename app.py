@@ -1,7 +1,7 @@
 import telebot
 from telebot import types
 from parser import getHoro, getHoroTodayAll, period_map
-from keyboards import get_zodiac_keyboard
+from keyboards import get_zodiac_keyboard, get_share_keyboard
 
 # ⚠️ ВСТАВЬ СЮДА СВОЙ ТОКЕН ОТ @BotFather
 TOKEN = "8910242289:AAHA58NR6EB-0IIQy6vx9GNRKId1x4f3l7U"
@@ -34,11 +34,19 @@ def callback_worker(call):
         
         horoscope = getHoro(sign, period_map.get(period, 'сегодня'))
         
+        # Сначала отправляем гороскоп
         bot.send_message(
             call.message.chat.id,
             horoscope,
             parse_mode="html",
             disable_web_page_preview=True
+        )
+        
+        # Потом отправляем кнопку "Поделиться"
+        bot.send_message(
+            call.message.chat.id,
+            "🌙 Понравился гороскоп? Поделись «Шёпотом судьбы» с близкими!",
+            reply_markup=get_share_keyboard()
         )
 
 if __name__ == '__main__':
