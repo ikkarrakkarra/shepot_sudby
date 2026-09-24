@@ -15,3 +15,14 @@ def get_zodiac_keyboard():
         buttons.append(btn)
     markup.add(*buttons)
     return markup
+
+
+def get_share_keyboard():
+    """Кнопка 'Поделиться' с непустым текстом (это важно!)."""
+    markup = types.InlineKeyboardMarkup()
+    share_btn = types.InlineKeyboardButton(
+        text="🔮 Поделиться с друзьями",
+        switch_inline_query="Загляни в «Шёпот судьбы» — узнай свой гороскоп! 🔮"
+    )
+    markup.add(share_btn)
+    return markup
