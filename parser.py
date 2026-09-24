@@ -1,17 +1,16 @@
 from gigachat import GigaChat
+from gigachat.models import Chat, Messages, MessagesRole
 
 # ⚠️ ВСТАВЬ СЮДА СВОЙ КЛЮЧ ИЗ SBER STUDIO
+# Найти: developers.sber.ru → Studio → проект → GigaChat API → Настройки API → Авторизационные данные
 GIGACHAT_CREDENTIALS = "MDE5ZWVkZGItYTY4ZC03OWY2LTg4MzktZjQ5OWY0OTM1MmJmOjBkOWZiZDdmLTQwNjMtNDA5YS04MzA0LTQ4NmVjMDczMGMxZg=="
 
-# === РЕЖИМ ОТЛАДКИ ===
-# True = используем заглушку (для теста callback'ов)
-# False = используем реальный GigaChat
-DEBUG_MODE = True
-
-giga = GigaChat(
+# Инициализация клиента с базовым адресом для физических лиц
+client = GigaChat(
+    base_url="https://api.giga.chat/v1",
     credentials=GIGACHAT_CREDENTIALS,
+    scope="GIGACHAT_API_PERS",
     verify_ssl_certs=False,
-    scope="GIGACHAT_API_PERS"
 )
 
 SIGN_MAP = {
@@ -28,15 +27,10 @@ period_map = {
 }
 
 def generate_horoscope(sign_ru, period='today'):
-    """Генерирует гороскоп через GigaChat (или заглушку в режиме отладки)."""
+    """Генерирует гороскоп через GigaChat Ultra 3.5."""
     sign_form = SIGN_MAP.get(sign_ru.lower(), sign_ru.capitalize())
     period_ru = period_map.get(period, 'сегодня')
     
-    # Режим отладки: возвращаем тестовый гороскоп
-    if DEBUG_MODE:
-        return f"🔮 Тестовый гороскоп для знака {sign_form} на {period_ru}. Если ты видишь это сообщение — callback работает корректно!"
-    
-    # Реальный режим: запрос к GigaChat
     prompt = (
         f"Ты — опытный астролог. Напиши короткий, но глубокий гороскоп для знака {sign_form} "
         f"на {period_ru} на русском языке. Стиль: загадочный, доверительный, как 'Шёпот судьбы'. "
@@ -45,8 +39,19 @@ def generate_horoscope(sign_ru, period='today'):
     )
     
     try:
-        response = giga.chat(prompt)
-        return response.choices[0].message.content.strip()
+        # Создаём объект Chat согласно официальному примеру
+        chat = Chat(
+            model="GigaChat-3-Ultra",
+            messages=[Messages(role=MessagesRole.USER, content=prompt)],
+        )
+        
+        # Отправляем запрос
+        resp = client.chat(chat)
+        
+        # Извлекаем текст ответа
+        horoscope = resp.choices[0].message.content.strip()
+        return horoscope
+        
     except Exception as e:
         print(f"Ошибка GigaChat: {e}")
         return f"✨ Звёзды сегодня шепчут: для знака {sign_form} наступает время перемен. Прислушайся к себе."
