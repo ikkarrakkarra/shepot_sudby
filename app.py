@@ -4,7 +4,7 @@ from parser import getHoro, getHoroTodayAll, generate_tarot_reading, period_map
 from keyboards import get_main_keyboard, get_zodiac_keyboard, get_share_keyboard
 
 # ⚠️ ВСТАВЬ СЮДА СВОЙ ТОКЕН ОТ @BotFather
-TOKEN = "ТВОЙ_ТОКЕН_ОТ_BOTFATHER"
+TOKEN = "8910242289:AAHA58NR6EB-0IIQy6vx9GNRKId1x4f3l7U"
 
 bot = telebot.TeleBot(TOKEN)
 
