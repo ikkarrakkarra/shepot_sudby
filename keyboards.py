@@ -14,8 +14,11 @@ def get_zodiac_keyboard():
     return markup
 
 def get_share_keyboard():
-    """Кнопка 'Поделиться'."""
+    """Кнопка 'Поделиться' через стандартную ссылку Telegram."""
     markup = types.InlineKeyboardMarkup()
-    share_btn = types.InlineKeyboardButton("🔮 Поделиться с друзьями", switch_inline_query="")
+    share_btn = types.InlineKeyboardButton(
+        text="🔮 Поделиться с друзьями",
+        url="https://t.me/share/url?url=https://t.me/shepotsudby_bot&text=Загляни в «Шёпот судьбы» — узнай свой гороскоп!"
+    )
     markup.add(share_btn)
     return markup
