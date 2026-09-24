@@ -1,7 +1,7 @@
 import telebot
 from telebot import types
 from parser import getHoro, getHoroTodayAll, period_map
-from keyboards import get_zodiac_keyboard, get_share_keyboard
+from keyboards import get_zodiac_keyboard
 
 # ⚠️ ВСТАВЬ СЮДА СВОЙ ТОКЕН ОТ @BotFather
 TOKEN = "8910242289:AAHA58NR6EB-0IIQy6vx9GNRKId1x4f3l7U"
@@ -25,7 +25,6 @@ def send_welcome(message):
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_worker(call):
-    # Отвечаем на callback, чтобы убрать "часики" у кнопки
     bot.answer_callback_query(call.id)
     
     if "|" in call.data:
@@ -33,16 +32,13 @@ def callback_worker(call):
         sign = el[0]
         period = el[1]
         
-        # Генерируем гороскоп
         horoscope = getHoro(sign, period_map.get(period, 'сегодня'))
         
-        # Отправляем гороскоп с кнопкой "Поделиться"
         bot.send_message(
             call.message.chat.id,
             horoscope,
             parse_mode="html",
-            disable_web_page_preview=True,
-            reply_markup=get_share_keyboard()
+            disable_web_page_preview=True
         )
 
 if __name__ == '__main__':
