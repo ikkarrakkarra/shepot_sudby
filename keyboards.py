@@ -1,13 +1,5 @@
 from telebot import types
 
-def get_main_keyboard():
-    """Главная клавиатура с выбором раздела."""
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
-    btn_horoscope = types.KeyboardButton("🔮 Гороскоп")
-    btn_tarot = types.KeyboardButton("🃏 Таро")
-    markup.add(btn_horoscope, btn_tarot)
-    return markup
-
 def get_zodiac_keyboard():
     """Клавиатура для выбора знака зодиака."""
     markup = types.InlineKeyboardMarkup(row_width=3)
