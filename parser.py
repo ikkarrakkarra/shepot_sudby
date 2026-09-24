@@ -3,7 +3,7 @@ from gigachat import GigaChat
 
 # ⚠️ ВСТАВЬ СЮДА СВОЙ КЛЮЧ ИЗ SBER STUDIO
 # Найти его: developers.sber.ru → Studio → твой проект → GigaChat API → Настройки API → Авторизационные данные
-GIGACHAT_CREDENTIALS = "ТВОЙ_КЛЮЧ_GIGACHAT"
+GIGACHAT_CREDENTIALS = "MDE5ZWVkZGItYTY4ZC03OWY2LTg4MzktZjQ5OWY0OTM1MmJmOjBkOWZiZDdmLTQwNjMtNDA5YS04MzA0LTQ4NmVjMDczMGMxZg=="
 
 giga = GigaChat(
     credentials=GIGACHAT_CREDENTIALS,
