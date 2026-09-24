@@ -45,7 +45,7 @@ def callback_worker(call):
         # Потом отправляем кнопку "Поделиться"
         bot.send_message(
             call.message.chat.id,
-            "🌙 Понравился гороскоп? Поделись «Шёпотом судьбы» с близкими!",
+            "🌙 Понравился гороскоп? Поделись с близкими!",
             reply_markup=get_share_keyboard()
         )
 
